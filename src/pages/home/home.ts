@@ -35,12 +35,19 @@ export class HomePage {
   cards;
   price: number;
   zona: Zona;
+  pNumber: string;
+  isError= false;
   vehiculo: Vehiculo;
+  showCobertura = false;
 
   constructor(public navCtrl: NavController, public http: Http) {
     this.zonas = this.initZona();
     this.vehiculos = new Array<Vehiculo>();
     this.coberturas = new Array<Cobertura>();
+    this.pNumber = "/[0-9]+/";
+    this.price = 100;
+    
+
 
     if (!this.importExcelFiles) {
       this.http.get("assets/info.json").map(data => {
@@ -49,13 +56,16 @@ export class HomePage {
         this.vehiculos = this.zona.vehiculos;
         this.vehiculo = this.vehiculos[0];
         this.coberturas = this.vehiculo.coberturas;
+        this.cotizar();
       }).subscribe();
     }
 
+    
   }
 
   getVehiculos(zona: Zona) {
     this.vehiculos = zona.vehiculos;
+    this.vehiculo = this.vehiculos[0];
   }
 
   getCoberturas(vehiculo: Vehiculo) {
@@ -63,9 +73,15 @@ export class HomePage {
   }
 
   cotizar() {
-    if (this.price == undefined) {
+    console.log(this.price);
+    if (this.price == undefined || this.price.toString()=="") {
+      console.log("text");
+      this.isError = true;
+      this.showCobertura = false;
       return;
     }
+    this.isError = false;
+    this.showCobertura = true;
     let price = parseFloat(this.price.toString());
     let prize = parseFloat(this.vehiculo.prize.toString());
     this.cards = new Array<Cobertura>();

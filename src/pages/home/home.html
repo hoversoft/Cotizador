@@ -7,9 +7,9 @@
 
   <input *ngIf="importExcelFiles == true" (change)='getData($event)' type="file" multiple accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
 
-  <ion-item class="no-padding-left">
+  <ion-item [ngClass]="{error:isError}" class="no-padding-left">
     <ion-label stacked>Precio</ion-label>
-    <ion-input placeholder="Ingrese el precio aqui!" type="number" [(ngModel)]="price"></ion-input>
+    <ion-input placeholder="Ingrese el precio aqui!" type="text" [(ngModel)]="price"></ion-input>
   </ion-item>
 
   <ion-item class="no-padding-left">
@@ -32,21 +32,23 @@
 
   <button block ion-button class="cotizar" color="primary" margin-top (click)="cotizar()">Cotizar</button>
 
-  <ion-item *ngIf="cards != undefined" class="no-padding-left" margin-bottom>
+  <ion-item *ngIf="showCobertura" class="no-padding-left" margin-bottom>
     <ion-label>Cobertura</ion-label>
   </ion-item>
 
-  <ion-list>
+  <ion-list *ngIf="showCobertura">
     <ion-card (click)="sendInfoCard(card)" *ngFor="let card of cards">
       <ion-item>
-        <ion-row>
-          <ion-col text-left>
+        <!--<ion-row>-->
+          <!--<ion-col text-left>
             <h2>{{ card.name }}</h2>
           </ion-col>
-          <ion-col text-right>
+          <ion-col text-left>
             <p><span *ngIf="card.value != 0">$</span>{{ (card.value != 0) ? card.value : "No tiene" }}</p>
-          </ion-col>
-        </ion-row>
+          </ion-col>-->
+        <!--</ion-row>-->
+        <h2>Nombre</h2>
+        <p>Precio</p>
       </ion-item>
     </ion-card>
   </ion-list>
