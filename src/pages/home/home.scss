@@ -15,6 +15,8 @@ page-home {
   }
   .card-md{
     width: 100%;
+    height: 75px;
+    // margin: 10px 0 10px 0;
     margin: 10px 0 10px 0;
   }
   .cotizar{
@@ -55,5 +57,10 @@ page-home {
       }
     }
   }
-
+  .error{
+    .item-inner{
+      border-bottom-color: red;
+      box-shadow: inset 0 -1px 0 0 red;
+    }
+  }
 }

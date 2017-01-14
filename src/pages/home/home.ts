@@ -35,7 +35,10 @@ export class HomePage {
   cards;
   price: number;
   zona: Zona;
+  pNumber: string;
+  isError= false;
   vehiculo: Vehiculo;
+  showCobertura = false;
 
   constructor(public navCtrl: NavController, public http: Http) {
     this.zonas = this.initZona();
@@ -54,10 +57,12 @@ export class HomePage {
       }).subscribe();
     }
 
+    
   }
 
   getVehiculos(zona: Zona) {
     this.vehiculos = zona.vehiculos;
+    this.vehiculo = this.vehiculos[0];
   }
 
   getCoberturas(vehiculo: Vehiculo) {
@@ -65,11 +70,13 @@ export class HomePage {
   }
 
   cotizar() {
-    console.log(this.price);
-    if (this.price == undefined || this.price.toString() == "") {
-      console.log("asd");
+    if (this.price == undefined || this.price.toString()=="") {
+      this.isError = true;
+      this.showCobertura = false;
       return;
     }
+    this.isError = false;
+    this.showCobertura = true;
     let price = parseFloat(this.price.toString());
     let prize = parseFloat(this.vehiculo.prize.toString());
     this.cards = new Array<Cobertura>();
