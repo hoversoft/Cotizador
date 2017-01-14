@@ -47,8 +47,10 @@ export class HomePage {
         this.zonas = data.json();
         this.zona = this.zonas.find(x => x.selected == true);
         this.vehiculos = this.zona.vehiculos;
-        this.vehiculo = this.vehiculos[0];
+        this.vehiculo = this.vehiculos[2];
         this.coberturas = this.vehiculo.coberturas;
+        this.price = 100;
+        this.cotizar();
       }).subscribe();
     }
 
@@ -63,7 +65,9 @@ export class HomePage {
   }
 
   cotizar() {
-    if (this.price == undefined) {
+    console.log(this.price);
+    if (this.price == undefined || this.price.toString() == "") {
+      console.log("asd");
       return;
     }
     let price = parseFloat(this.price.toString());

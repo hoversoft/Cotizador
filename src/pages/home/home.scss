@@ -2,6 +2,9 @@ page-home {
   ion-title{
     margin-top: 10px;
   }
+  .item-md{
+    background-color: #FAFAFA;
+  }
   .logo{    
     width: 80vw;
     margin: 10px auto auto;
@@ -16,6 +19,41 @@ page-home {
   }
   .cotizar{
     height: 4rem;
+  }
+  .flex{
+    display: flex;
+    flex-direction: row;
+    height: 90px;
+    div{
+      display: flex;
+      p,ion-icon{
+        margin: auto;
+      }
+      p{
+        font-size: 2.3rem;
+        color: white;
+      }
+      ion-icon{
+        font-size: 3.5rem;
+        color: #444;
+      }
+      &:nth-child(1){
+        height: 100%;
+        width: 110px;
+        background-color: #387EF5;
+        margin: 0;
+      }
+      &:nth-child(2){
+        margin: auto 10px auto auto;
+        p{
+          color: #10893E;
+          font-size: 2.6rem;
+        }
+      }
+      &:nth-child(3){
+        width: 50px;
+      }
+    }
   }
 
 }
