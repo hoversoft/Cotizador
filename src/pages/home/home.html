@@ -1,0 +1,54 @@
+<ion-content padding text-center>
+  <img src="assets/ESLogo.png" alt="Escudo Seguros" class="logo">
+  
+  <ion-title text-center>
+    Cotizador
+  </ion-title>
+
+  <input *ngIf="importExcelFiles == true" (change)='getData($event)' type="file" multiple accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+
+  <ion-item class="no-padding-left">
+    <ion-label stacked>Precio</ion-label>
+    <ion-input placeholder="Ingrese el precio aqui!" type="number" [(ngModel)]="price"></ion-input>
+  </ion-item>
+
+  <ion-item class="no-padding-left">
+    <ion-label stacked>Zona</ion-label>
+    <ion-select [(ngModel)]="zona" (ionChange)="getVehiculos($event)">
+      <ion-option *ngFor="let zona of zonas" [value]="zona">
+        {{ zona.name }}
+      </ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item class="no-padding-left">
+    <ion-label stacked>Tipo de vehiculo</ion-label>
+    <ion-select [(ngModel)]="vehiculo" (ionChange)="getCoberturas($event)">
+      <ion-option *ngFor="let vehiculo of vehiculos" [value]="vehiculo">
+        {{ vehiculo.name }}
+      </ion-option>
+    </ion-select>
+  </ion-item>
+
+  <button block ion-button class="cotizar" color="primary" margin-top (click)="cotizar()">Cotizar</button>
+
+  <ion-item *ngIf="cards != undefined" class="no-padding-left" margin-bottom>
+    <ion-label>Cobertura</ion-label>
+  </ion-item>
+
+  <ion-list>
+    <ion-card (click)="sendInfoCard(card)" *ngFor="let card of cards">
+      <ion-item>
+        <ion-row>
+          <ion-col text-left>
+            <h2>{{ card.name }}</h2>
+          </ion-col>
+          <ion-col text-right>
+            <p><span *ngIf="card.value != 0">$</span>{{ (card.value != 0) ? card.value : "No tiene" }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+
+</ion-content>
