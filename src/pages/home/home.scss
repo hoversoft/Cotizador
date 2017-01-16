@@ -36,7 +36,7 @@ page-home {
         color: white;
       }
       ion-icon{
-        font-size: 3.5rem;
+        font-size: 3rem;
         color: #444;
       }
       &:nth-child(1){
@@ -49,7 +49,6 @@ page-home {
         margin: auto 10px auto auto;
         p{
           color: #10893E;
-          font-size: 2.6rem;
         }
       }
       &:nth-child(3){
@@ -57,10 +56,13 @@ page-home {
       }
     }
   }
-  .error{
-    .item-inner{
-      border-bottom-color: red;
-      box-shadow: inset 0 -1px 0 0 red;
-    }
-  }
+  // .error{
+  //   .item-inner{
+  //     border-bottom-color: map-get($colors, danger) !important;
+  //     box-shadow: inset 0 -1px 0 0 map-get($colors, danger);
+  //   }
+  //   .label{
+  //     color:  map-get($colors, danger)
+  //   }
+  // }
 }

@@ -1,9 +1,13 @@
+
 import { Component } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+
 import { NavController } from 'ionic-angular';
 import { CardInfoPage } from '../card-info/card-info';
+
+import { Keyboard } from 'ionic-native';
 
 // declare var XLSX: any;
 
@@ -32,12 +36,12 @@ export class HomePage {
   zonas: Zona[];
   vehiculos: Vehiculo[];
   coberturas: Cobertura[];
-  cards;
-  price: number;
   zona: Zona;
-  pNumber: string;
-  isError= false;
   vehiculo: Vehiculo;
+  cards;
+  price: number = 0;
+  pNumber: string;
+  isError = false;
   showCobertura = false;
 
   constructor(public navCtrl: NavController, public http: Http) {
@@ -52,12 +56,10 @@ export class HomePage {
         this.vehiculos = this.zona.vehiculos;
         this.vehiculo = this.vehiculos[2];
         this.coberturas = this.vehiculo.coberturas;
-        this.price = 100;
-        this.cotizar();
+        // this.price = 100;
+        // this.cotizar();
       }).subscribe();
     }
-
-    
   }
 
   getVehiculos(zona: Zona) {
@@ -69,8 +71,9 @@ export class HomePage {
     this.coberturas = vehiculo.coberturas;
   }
 
-  cotizar() {
-    if (this.price == undefined || this.price.toString()=="") {
+  cotizar(priceInput) {
+    if (this.price == undefined || this.price.toString() == "") {
+      priceInput.setFocus();
       this.isError = true;
       this.showCobertura = false;
       return;
@@ -88,6 +91,15 @@ export class HomePage {
         result = 0;
       this.cards.push(new Cobertura(e.name, result))
     })
+  }
+
+  isNumber(event) {
+    if (event.target.value != 0) {
+      let pattern = /[^0][0-9]+/;
+      let value = pattern.exec(event.target.value);
+      console.log(value);
+      event.target.value = value[0];
+    }
   }
 
   initZona() {

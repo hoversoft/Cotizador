@@ -19,6 +19,6 @@ import { CardInfoPage } from '../pages/card-info/card-info';
     HomePage,
     CardInfoPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }]
 })
 export class AppModule {}

@@ -1,15 +1,15 @@
 <ion-content padding text-center>
   <img src="assets/ESLogo.png" alt="Escudo Seguros" class="logo">
-  
+
   <ion-title text-center>
     Cotizador
   </ion-title>
 
   <input *ngIf="importExcelFiles == true" (change)='getData($event)' type="file" multiple accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
 
-  <ion-item [ngClass]="{error:isError}" class="no-padding-left">
+  <ion-item class="no-padding-left">
     <ion-label stacked>Precio</ion-label>
-    <ion-input placeholder="Ingrese el precio aqui!" type="number" min="0" [(ngModel)]="price"></ion-input>
+    <ion-input #priceInput placeholder="Ingrese el precio aqui!" type="number" [(ngModel)]="price" (keyup)="isNumber($event)"></ion-input>
   </ion-item>
 
   <ion-item class="no-padding-left">
@@ -30,7 +30,7 @@
     </ion-select>
   </ion-item>
 
-  <button block ion-button class="cotizar" color="primary" margin-top (click)="cotizar()">Cotizar</button>
+  <button block ion-button class="cotizar" color="primary" margin-top (click)="cotizar(priceInput)">Cotizar</button>
 
   <ion-item *ngIf="showCobertura" class="no-padding-left" margin-bottom>
     <ion-label>Coberturas</ion-label>
@@ -50,3 +50,7 @@
     </ion-card>
   </ion-list>
 </ion-content>
+
+<ion-footer>
+  
+</ion-footer>
