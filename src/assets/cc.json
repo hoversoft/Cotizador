@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Parabrisas y/o Lunetas",
+    "categories": [
+      {
+        "antiquity": "0 km - 5 años",
+        "limit": "$7.000"
+      },
+      {
+        "antiquity": "6 - 10 años",
+        "limit": "$4.000"
+      },
+      {
+        "antiquity": "11 - 15 años",
+        "limit": "$2.800"
+      },
+      {
+        "antiquity": "16 años o más",
+        "limit": "$2.000"
+      }
+    ]
+  },
+  {
+    "name": "Cristales laterales y/o cerraduras exteriores",
+    "categories": [
+      {
+        "antiquity": "0 km - 5 años",
+        "limit": "$2.500"
+      },
+      {
+        "antiquity": "6 - 10 años",
+        "limit": "$1.800"
+      },
+      {
+        "antiquity": "11 - 15 años",
+        "limit": "$1.300"
+      },
+      {
+        "antiquity": "16 años o más",
+        "limit": "$900"
+      }
+    ]
+  }
+]

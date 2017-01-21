@@ -19,3 +19,63 @@
 .content-md{
   background-color: #FAFAFA;
 }
+
+.alert-md{
+  .alert-wrapper{
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+  }
+  .alert-radio-label{
+    text-align: justify;
+    white-space: normal;
+  }
+}
+
+.item-md{
+  background-color: #FAFAFA;
+}
+
+.no-padding-left{
+  padding-left: 0
+}
+
+
+.card-md{
+  width: 100%;
+  height: 75px;
+  // margin: 10px 0 10px 0;
+  margin: 10px 0 10px 0;
+}
+
+.row-header{
+  background-color: #26a69a;
+  color: #FFF;
+  margin-bottom: 3px;
+}
+
+.row-list{
+  padding: 0 10px;
+  ion-row{
+    border-bottom: 1px solid #DDD;
+    &:last-child{
+      border: 0;
+    }
+  }
+}
+
+.item-md.ng-valid.input-has-value:not(.input-has-focus) {
+  .item-inner{
+    border-bottom: 1px solid #dedede !important;
+    box-shadow: initial !important;
+  }
+}
+
+ion-header{
+  .toolbar-background-md{
+    background: #26a69a;
+  }
+  ion-icon,.toolbar-title-md{
+    color: #FFF;
+  }
+}

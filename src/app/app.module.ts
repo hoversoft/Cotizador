@@ -2,13 +2,13 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { CardInfoPage } from '../pages/card-info/card-info';
+import { CcPage } from '../pages/cc/cc';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    CardInfoPage
+    CcPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -17,7 +17,7 @@ import { CardInfoPage } from '../pages/card-info/card-info';
   entryComponents: [
     MyApp,
     HomePage,
-    CardInfoPage
+    CcPage
   ],
   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }]
 })

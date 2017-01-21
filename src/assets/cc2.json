@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Parabrisas y/o Lunetas",
+    "categories": [
+      {
+        "name": "Vehículos 0 km y hasta 5 años de antigüedad de fabricación",
+        "value": "Por evento y por año el límite máximo es de $7.000"
+      },
+      {
+        "name": "Vehículos de 6 años y hasta 10 años de antigüedad de fabricación",
+        "value": "Por evento y por año el límite máximo es de $4.000"
+      },
+      {
+        "name": "Vehículos de 11 años y hasta 15 años de antigüedad de fabricación",
+        "value": "Por evento y por año el límite máximo es de $2.800"
+      },
+      {
+        "name": "Vehículos de más de 16 años de antigüedad de fabricación",
+        "value": "Por evento y por año el límite máximo es de $2.000"
+      }
+    ]
+  },
+  {
+    "name": "Cristales laterales y/o cerraduras exteriores",
+    "categories": [
+      {
+        "name": "Vehículos 0 km y hasta 5 años de antigüedad de fabricación",
+        "value": "Por evento y por año el límite máximo es de $2.500"
+      },
+      {
+        "name": "Vehículos de 6 años y hasta 10 años de antigüedad de fabricación",
+        "value": "Por evento y por año el límite máximo es de $1.800"
+      },
+      {
+        "name": "Vehículos de 11 años y hasta 15 años de antigüedad de fabricación",
+        "value": "Por evento y por año el límite máximo es de $1.300"
+      },
+      {
+        "name": "Vehículos de más de 16 años de antigüedad de fabricación",
+        "value": "Por evento y por año el límite máximo es de $900"
+      }
+    ]
+  }
+]

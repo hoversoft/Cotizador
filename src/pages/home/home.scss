@@ -2,22 +2,10 @@ page-home {
   ion-title{
     margin-top: 10px;
   }
-  .item-md{
-    background-color: #FAFAFA;
-  }
   .logo{    
     width: 80vw;
-    margin: 10px auto auto;
+    margin: 20px auto 35px;
     display: block;
-  }
-  .no-padding-left{
-    padding-left: 0
-  }
-  .card-md{
-    width: 100%;
-    height: 75px;
-    // margin: 10px 0 10px 0;
-    margin: 10px 0 10px 0;
   }
   .cotizar{
     height: 4rem;
@@ -25,7 +13,7 @@ page-home {
   .flex{
     display: flex;
     flex-direction: row;
-    height: 90px;
+    height: 85px;
     div{
       display: flex;
       p,ion-icon{
@@ -41,28 +29,31 @@ page-home {
       }
       &:nth-child(1){
         height: 100%;
-        width: 110px;
+        width: 120px;
         background-color: #387EF5;
         margin: 0;
       }
       &:nth-child(2){
-        margin: auto 10px auto auto;
+        margin: auto;
         p{
           color: #10893E;
         }
       }
-      &:nth-child(3){
-        width: 50px;
-      }
     }
   }
-  // .error{
-  //   .item-inner{
-  //     border-bottom-color: map-get($colors, danger) !important;
-  //     box-shadow: inset 0 -1px 0 0 map-get($colors, danger);
-  //   }
-  //   .label{
-  //     color:  map-get($colors, danger)
-  //   }
-  // }
+  .cotizarCC{
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    height: 50px;
+    color: #FFF;
+    background-color: #26a69a;
+    p{
+      color: #FFF;
+      flex: 1;
+    }
+    ion-icon{
+      font-size: 2.5rem;
+    }
+  }
 }

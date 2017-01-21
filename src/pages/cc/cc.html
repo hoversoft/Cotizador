@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Cristales y Cerraduras</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list *ngFor="let card of cards">
+    <ion-item class="no-padding-left" no-lines text-center>
+      <h2>
+        <strong>{{ card.name }}</strong>
+      </h2>
+    </ion-item>
+    <ion-card class="ccCard">
+      <ion-grid text-center style="padding: 0 0 3px;">
+        <ion-row class="row-header">
+          <ion-col>
+            <strong>Antigüedad</strong>
+          </ion-col>
+          <ion-col>
+            <strong>Limite Maximo</strong>
+          </ion-col>
+        </ion-row>
+        <div class="row-list">
+          <ion-row *ngFor="let category of card.categories">
+            <ion-col>{{ category.antiquity }}</ion-col>
+            <ion-col>{{ category.limit }}</ion-col>
+          </ion-row>
+        </div>
+      </ion-grid>
+    </ion-card>
+  </ion-list>
+</ion-content>

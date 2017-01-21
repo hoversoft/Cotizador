@@ -3,13 +3,7 @@ import { Component } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-
 import { NavController } from 'ionic-angular';
-import { CardInfoPage } from '../card-info/card-info';
-
-import { Keyboard } from 'ionic-native';
-
-// declare var XLSX: any;
 
 import * as XLSX from 'xlsx/xlsx';
 import 'rxjs/Rx';
@@ -20,10 +14,7 @@ import { Zona } from '../../models/Zona';
 import { Vehiculo } from '../../models/Vehiculo';
 import { Cobertura } from '../../models/Cobertura';
 
-//Type parameter for getExcel
-type ExcelRange = { start: { row: number, column: number }, end: { row: number, column: number } };
-type ExcelAlign = "all" | "perRow" | "perCol";
-
+import { CcPage } from '../cc/cc';
 
 @Component({
   selector: 'page-home',
@@ -38,11 +29,13 @@ export class HomePage {
   coberturas: Cobertura[];
   zona: Zona;
   vehiculo: Vehiculo;
+  price: number;
   cards;
-  price: number = 0;
-  pNumber: string;
-  isError = false;
-  showCobertura = false;
+  defaultZona: number = 0;
+  defaultVehiculo: number = 0;
+  showCobertura: Boolean = false;
+
+
 
   constructor(public navCtrl: NavController, public http: Http) {
     this.zonas = this.initZona();
@@ -50,11 +43,11 @@ export class HomePage {
     this.coberturas = new Array<Cobertura>();
 
     if (!this.importExcelFiles) {
-      this.http.get("assets/info.json").map(data => {
+      this.http.get("assets/cotizaciones.json").map(data => {
         this.zonas = data.json();
-        this.zona = this.zonas.find(x => x.selected == true);
+        this.zona = this.zonas[this.defaultZona];
         this.vehiculos = this.zona.vehiculos;
-        this.vehiculo = this.vehiculos[2];
+        this.vehiculo = this.vehiculos[this.defaultVehiculo];
         this.coberturas = this.vehiculo.coberturas;
         // this.price = 100;
         // this.cotizar();
@@ -64,7 +57,7 @@ export class HomePage {
 
   getVehiculos(zona: Zona) {
     this.vehiculos = zona.vehiculos;
-    this.vehiculo = this.vehiculos[0];
+    this.vehiculo = this.vehiculos[this.defaultVehiculo];
   }
 
   getCoberturas(vehiculo: Vehiculo) {
@@ -74,70 +67,75 @@ export class HomePage {
   cotizar(priceInput) {
     if (this.price == undefined || this.price.toString() == "") {
       priceInput.setFocus();
-      this.isError = true;
       this.showCobertura = false;
       return;
     }
-    this.isError = false;
     this.showCobertura = true;
     let price = parseFloat(this.price.toString());
-    let prize = parseFloat(this.vehiculo.prize.toString());
+    let prize = parseFloat(this.vehiculo.prize.toString().replace(/,/g, ''));
+
     this.cards = new Array<Cobertura>();
     this.coberturas.forEach(e => {
-      let value = parseFloat(e.value.toString());
-      let result = ((price * e.value / 1000) + prize) / 4;
-      result = parseFloat(result.toFixed(2));
-      if (value == 0)
-        result = 0;
-      this.cards.push(new Cobertura(e.name, result))
+      if (e.name == "RC") {
+        this.cards.push(new Cobertura(e.name, e.value))
+      } else {
+        let value = parseFloat(e.value.toString());
+        let result = ((price * e.value / 1000) + prize) / 4;
+        result = parseFloat(result.toFixed(2));
+        if (value == 0)
+          result = 0;
+        this.cards.push(new Cobertura(e.name, result))
+      }
     })
   }
 
-  isNumber(event) {
-    if (event.target.value != 0) {
-      let pattern = /[^0][0-9]+/;
-      let value = pattern.exec(event.target.value);
-      console.log(value);
-      event.target.value = value[0];
+  isNumber(event, priceInput) {
+    priceInput.setFocus();
+    let pattern = /[0-9]+/;
+    let value = pattern.exec(event.target.value);
+    if (event.target.value == 0 || !value) {
+      event.target.value = "";
+      return;
     }
+    event.target.value = value[0];
+  }
+
+  cotizarCC() {
+    this.navCtrl.push(CcPage);
   }
 
   initZona() {
     let array = new Array();
-    array.push(new Zona('Cordoba Capital', 'CB', true));
-    array.push(new Zona('Cordoba Interior', 'CBI'));
-    array.push(new Zona('Buenos Aires', 'BA'));
-    array.push(new Zona('Catamarca', 'CAT'));
-    array.push(new Zona('Chaco', 'CHA'));
-    array.push(new Zona('Chubut', 'CHU'));
-    array.push(new Zona('Corrientes', 'COR'));
-    array.push(new Zona('Entre Rios', 'ER'));
-    array.push(new Zona('Formosa', 'FOR'));
-    array.push(new Zona('Jujuy', 'JU'));
-    array.push(new Zona('La Pampa', 'PAM'));
-    array.push(new Zona('La Rioja', 'RIO'));
-    array.push(new Zona('Mar del Plata', 'MP'));
-    array.push(new Zona('Mendoza', 'MEN'));
-    array.push(new Zona('Misiones', 'MIS'));
-    array.push(new Zona('Neuquen', 'NEU'));
-    array.push(new Zona('Partido de la Costa', 'PC'));
-    array.push(new Zona('Rio Gallegos', 'RG'));
-    array.push(new Zona('Rio Negro', 'RN'));
-    array.push(new Zona('Salta', 'SAL'));
-    array.push(new Zona('San Juan', 'SJ'));
-    array.push(new Zona('San Luis', 'SL'));
-    array.push(new Zona('Santa Fe', 'SF'));
-    array.push(new Zona('Santiago del Estero', 'SE'));
-    array.push(new Zona('Tucuman', 'TUC'));
+    array.push(new Zona('Cordoba Capital'));
+    array.push(new Zona('Cordoba Interior'));
+    array.push(new Zona('La Rioja'));
+    array.push(new Zona('Catamarca'));
+    array.push(new Zona('Tucuman'));
+    array.push(new Zona('Salta'));
+    array.push(new Zona('Santa Fe'));
+    array.push(new Zona('San Luis'));
+    array.push(new Zona('Buenos Aires'));
+    array.push(new Zona('Chaco'));
+    array.push(new Zona('Chubut'));
+    array.push(new Zona('Corrientes'));
+    array.push(new Zona('Entre Rios'));
+    array.push(new Zona('Formosa'));
+    array.push(new Zona('Jujuy'));
+    array.push(new Zona('La Pampa'));
+    array.push(new Zona('Mar del Plata'));
+    array.push(new Zona('Mendoza'));
+    array.push(new Zona('Misiones'));
+    array.push(new Zona('Neuquen'));
+    array.push(new Zona('Partido de la Costa'));
+    array.push(new Zona('Rio Gallegos'));
+    array.push(new Zona('Rio Negro'));
+    array.push(new Zona('San Juan'));
+    array.push(new Zona('Santiago del Estero'));
     return array;
   }
 
   getData(fileInput) {
-    let cellRange = {
-      start: { row: 8, column: 2 },
-      end: { row: 28, column: 11 }
-    }
-    this.getExcel(fileInput, cellRange, "perRow").subscribe(data => {
+    this.getExcel(fileInput, "C9:M29").subscribe(data => {
       data.forEach(e => {
         let zona = this.zonas.find(x =>
           new RegExp(x.name.toLowerCase()).test(e.file.toLowerCase())
@@ -145,8 +143,8 @@ export class HomePage {
         for (let i = 0; i <= e.data.length - 1; i++) {
           let item = e.data[i];
           let l = item.length;
-          console.log(zona);
           let vehiculo = new Vehiculo(item[0], item[2]);
+          vehiculo.add(new Cobertura("RC", item[l - 7]))
           vehiculo.add(new Cobertura("B", item[l - 6]))
           vehiculo.add(new Cobertura("B1", item[l - 5]))
           vehiculo.add(new Cobertura("BX", item[l - 4]))
@@ -160,7 +158,7 @@ export class HomePage {
       var blob = new Blob([json], { type: "application/json" });
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
-      a.download = "backup.json";
+      a.download = "cotizaciones.json";
       a.href = url;
       a.textContent = "Download backup.json";
       a.click();
@@ -168,64 +166,46 @@ export class HomePage {
 
   }
 
-
-  getExcel(fileInput: String, cellRange: ExcelRange, config: ExcelAlign): Observable<any> {
-    return this.getFileData(fileInput).map(data => {
+  getExcel(fileInput: String, range: String): Observable<any> {
+    return this.getFileData(fileInput).map(excels => {
       let array = [];
-      data.forEach(e => {
-        let workbook = XLSX.read(e.data, { type: 'binary' });
+      excels.forEach(excel => {
+        let workbook = XLSX.read(excel.data, { type: 'binary' });
         let sheetName = workbook.SheetNames[0];
         let sheet = workbook.Sheets[sheetName];
-        array.push({ file: e.file, data: this.alignExcel(sheet, cellRange, config) });
+
+        let rango = XLSX.utils.decode_range(range);
+        let lastRow = sheet[XLSX.utils.encode_cell({ r: rango.e.r, c: rango.s.c })];
+        let lastCol = sheet[XLSX.utils.encode_cell({ r: rango.s.r, c: rango.e.c })];
+        if (lastRow == undefined) {
+          rango.s.r -= 1;
+          rango.e.r -= 1;
+        }
+        if (lastCol == undefined) {
+          rango.e.c -= 1;
+        }
+
+        rango = XLSX.utils.encode_range(rango);
+        array.push({ file: excel.file, data: this.sheetToArray(sheet, rango) });
       })
       return array;
     });
   }
 
-  alignExcel(sheet, cellRange: ExcelRange, config: ExcelAlign): Array<any> {
-    let dataRange = [];
-    let dataLine = [];
-    let sStart;
-    let sEnd;
-    let eStart;
-    let eEnd;
-    if (config == "perCol") {
-      sStart = cellRange.start.column
-      sEnd = cellRange.end.column
-      eStart = cellRange.start.row
-      eEnd = cellRange.end.row
-    } else {
-      sStart = cellRange.start.row
-      sEnd = cellRange.end.row
-      eStart = cellRange.start.column
-      eEnd = cellRange.end.column
-    }
-    for (let i = sStart; i <= sEnd; i++) {
-      for (let j = eStart; j <= eEnd; j++) {
-        let cellAddress = (config == "perCol") ? { r: j, c: i } : { r: i, c: j };
-        let cellName = XLSX.utils.encode_cell(cellAddress);
-        let data;
-        if (sheet[cellName] != undefined) {
-          data = sheet[cellName].v;
-        }
-        //Remove all spaces
-        if (typeof data === "string")
-          data = data.replace(/ +(?= )/g, '');
-        //Two digits after comma
-        if (typeof data === "number")
-          data = data.toFixed(2);
-        if (config == "all")
-          dataRange.push(data);
-        if (config == "perRow" || config == "perCol")
-          dataLine.push(data);
-
+  sheetToArray(sheet: any, range: String): Array<String> {
+    let rowList = [];
+    let rango = XLSX.utils.decode_range(range);
+    for (let R = rango.s.r; R <= rango.e.r; R++) {
+      let row = [];
+      for (let C = rango.s.c; C <= rango.e.c; C++) {
+        let cellName = XLSX.utils.encode_cell({ r: R, c: C });
+        let cell = sheet[cellName].w;
+        cell = cell.replace(/ +(?= )/g, '');
+        row.push(cell);
       }
-      if (config == "perRow" || config == "perCol") {
-        dataRange.push(dataLine);
-        dataLine = [];
-      }
+      rowList.push(row);
     }
-    return dataRange;
+    return rowList;
   }
 
   getFileData(fileInput): Observable<any> {
@@ -248,11 +228,5 @@ export class HomePage {
         reader.readAsBinaryString(f);
       }
     })
-  }
-
-  sendInfoCard(card: Cobertura) {
-    if (card.value == 0)
-      return;
-    this.navCtrl.push(CardInfoPage, card);
   }
 }
