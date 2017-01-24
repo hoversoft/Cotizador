@@ -5,16 +5,12 @@
 <ion-content padding text-center>
   <img src="assets/ESLogo.png" alt="Escudo Seguros" class="logo">
 
-  <ion-card class="flex cotizarCC" (click)="cotizarCC()">
-    <p>CRISTALES Y CERRADURAS</p>
-    <ion-icon name="ios-arrow-forward"></ion-icon>
-  </ion-card>
 
   <input *ngIf="importExcelFiles == true" (change)='getData($event)' type="file" multiple accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
 
   <ion-item class="no-padding-left">
-    <ion-label stacked>Precio</ion-label>
-    <ion-input #priceInput placeholder="Ingrese el precio aqui!" type="tel" [(ngModel)]="price" (input)="isNumber($event,priceInput)" required></ion-input>
+    <ion-label stacked>Suma asegurada</ion-label>
+    <ion-input #priceInput placeholder="Ingrese el monto aquí" type="tel" [(ngModel)]="price" (input)="isNumber($event,priceInput)" required></ion-input>
   </ion-item>
 
   <ion-item class="no-padding-left">
@@ -35,7 +31,10 @@
     </ion-select>
   </ion-item>
 
-  <button block ion-button class="cotizar" color="primary" margin-top (click)="cotizar(priceInput)">Cotizar</button>
+  <button block ion-button class="cotizar" color="primary" margin-top (click)="cotizar(priceInput)">
+    <p>Cotizar ahora</p>
+    <ion-icon name="md-arrow-down"></ion-icon>
+    </button>
 
   <ion-item *ngIf="showCobertura" class="no-padding-left" margin-bottom>
     <ion-label>Coberturas</ion-label>
@@ -50,5 +49,11 @@
         <p><span *ngIf="card.value != 0">$</span>{{ (card.value != 0) ? card.value : "No tiene" }}</p>
       </div>
     </ion-card>
+    <ion-card class="flex cotizarCC" (click)="cotizarCC()">
+      <p>CRISTALES Y CERRADURAS</p>
+      <ion-icon name="ios-arrow-forward"></ion-icon>
+    </ion-card>
   </ion-list>
+
+
 </ion-content>
